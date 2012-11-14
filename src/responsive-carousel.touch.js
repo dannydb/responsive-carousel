@@ -56,24 +56,26 @@
 					} )
 					.bind( "touchmove", function( e ){
 						setData( e );
+						if(Math.abs(data.deltaX) > Math.abs(data.deltaY)){
+							e.preventDefault();
+						}
+
 						emitEvents( e );
 						if( !iOS ){
 							e.preventDefault();
 							window.scrollBy( 0, -data.deltaY );
-						}					
+						}
 					} )
 					.bind( "touchend", function( e ){
 						$( this ).removeClass( noTrans );
 						emitEvents( e );
 					} );
-					
-					
 			}
 		};
-			
+
 	// add methods
-	$.extend( $.fn[ pluginName ].prototype, touchMethods ); 
-	
+	$.extend( $.fn[ pluginName ].prototype, touchMethods );
+
 	// DOM-ready auto-init
 	$( initSelector ).live( "create." + pluginName, function(){
 		$( this )[ pluginName ]( "_dragBehavior" );
